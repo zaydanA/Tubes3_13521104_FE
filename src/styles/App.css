@@ -36,19 +36,26 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: auto;
+  height: 100px;
   /* padding: 0px; */
-  padding-top: 40px;
+  /* padding-top: 40px; */
 
 
 }
 
 .clearChat{
+  position: relative;
   padding-left: 10px;
 }
 
-.sidemenu-button{
+.clearChat-button{
   /* margin-top: 10px; */
+  /* bottom: 100px; */
+  position: absolute;
+  bottom: 100px;
+  width: 245px;
+  height: 50px;
+  /* position: absolute; */
   padding: 12px;
   border: 1px solid #4c4d4f;
   border-radius: 4px;
@@ -60,7 +67,7 @@
 
 }
 
-.sidemenu-button:hover{
+.clearChat-button:hover{
   /* margin-top: 10px;
   padding: 12px;
   border: 1px solid white;
@@ -71,7 +78,7 @@
   background-color: rgba(255, 255, 255, 0.1);
 
 }
-.sidemenu-button span{
+.clearChat-button span{
   padding-left: 4px;
   padding-right: 13px;
 
