@@ -1,138 +1,3 @@
-/* .algorithm-container{
-    position: absolute;
-    bottom: 170px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    
-}
-
-.KMP{
-    align-self: center;
-    border: 1px solid #4c4d4f;
-    border-radius: 5px;
-    width: 100px;
-    margin-right: 12px;
-    margin-left: 18px;
-
-
-}
-.BM{
-    align-self: center;
-    border: 1px solid #4c4d4f;
-    border-radius: 5px;
-    width: 100px;
-
-}
-
-.mystyle {
-    align-self: center;
-    border: 1px solid #4c4d4f;
-    border-radius: 5px;
-    width: 100px;
-    margin-right: 12px;
-    margin-left: 18px;
-    background-color: green;
-    color: white;
-}
-.mystyle1 { 
-    align-self: center;
-    border: 1px solid #4c4d4f;
-    border-radius: 5px;
-    width: 100px;
-    background-color: red;
-    color: white;
-}
-
-.dropdown{
-    width: 212px;
-    margin: 1em;
-    position: absolute;
-    bottom: 150px;
-}
-
-.dropdown * {
-    box-sizing: border-box;
-}
-
-.select{
-    background-color: #2a2f4b;
-    color: #FFFFFF;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #4c4d4f;
-    border-radius: 0.5em;
-    padding: 1em;
-    cursor: pointer;
-    transition: background 0.3s;
-
-}
-
-.select-clicked{
-    border: 2px #26489a solid;
-    box-shadow: 0 0 0.8em #000;
-
-}
-
-.select:hover{
-    background: #323741;
-
-}
-
-.caret{
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid #FFFFFF;
-    transition: 0.3s;
-}
-
-.caret-rotate{
-    transform: rotate(180deg);
-}
-
-.menu{
-    list-style: none;
-    padding: 0.2em 0.5em;
-    background: #323741;
-    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
-    border-radius: 0.5em;
-    color: #9fa5b5;
-    position: absolute;
-    top: 3em;
-    left:50%;
-    width: 100%;
-    transform: translateX(-50%);
-    opacity: 0;
-    display: none;
-    transition: 0.2s;
-    z-index: 1;
-
-}
-
-.menu li{
-    padding: 0.7em 0.5em;
-    margin: 0.3em 0;
-    border-radius: 0.5em;
-    cursor: pointer;
-}
-
-.menu li:hover{
-    background: #2a2d35;
-}
-
-.active{
-    background: #23242a;
-}
-
-.menu-open{
-    display: block;
-    opacity: 1;
-
-} */
-
 select {
     -webkit-appearance:none;
     -moz-appearance:none;
@@ -155,10 +20,15 @@ select {
     display: none;
  }
  .select {
-    position: fixed;
+    position: relative;
+    /* margin: 10px; */
+    margin-bottom: 12px;
+    margin-right: 3px;
+    margin-left: 3px;
     /* bottom: 160px; */
+    /* flex-shrink: 1; */
     display: flex;
-    width: 244px;
+    /* width: 244px; */
     height: 2.5em;
     line-height: 3;
     background: #5c6664;
@@ -167,9 +37,10 @@ select {
  }
  .select::after {
     content: '\25BC';
-    position: relative;
+    position: ab;
     top: 0;
     right: 0;
+    bottom: 0;
     padding: 0 1em;
     background: #2b2e2e;
     cursor:pointer;

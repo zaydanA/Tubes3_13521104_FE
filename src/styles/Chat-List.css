@@ -1,0 +1,40 @@
+.chatList-outer{
+    position: relative;
+    flex-shrink: 0;
+    flex-direction: column;
+    flex: 1;
+    padding: 2px;
+    height: 100%;
+    padding-bottom: 370px; 
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.listChat-button{
+    display: flex;
+    padding: 14px;
+    border-radius: 4px;
+    position: relative;
+    text-align: left;
+    transition: ease 0.25s all;
+    cursor: pointer;
+}
+.listChat-button-active{
+    display: flex;
+    padding: 12px;
+    border-radius: 4px;
+    position: relative;
+    text-align: left;
+    transition: ease 0.25s all;
+    cursor: pointer;
+    background-color: #343541;
+}
+.listChat-button:hover{
+    background-color: rgba(255, 255, 255, 0.1);
+  
+}
+
+.listChat-button span{
+    padding-left: 4px;
+    padding-right: 13px;
+}

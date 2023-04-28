@@ -1,36 +1,87 @@
 // import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import {useState} from 'react'
+import Typewriter, { TypewriterClass } from 'typewriter-effect';
 
 const inter = Inter({ subsets: ['latin'] })
 
 function Home() {
+  const [input,setInput]= useState("")
+  // const [chatLog,setChatLog] = useState([{
+  //   role : "assistant",
+  //   content : "How can i help you darling?"
+  // }]);
 
-  const[input,setInput]= useState("")
-  const [chatLog,setChatLog] = useState([{
-    role : "assistant",
-    content : "How can i help you darling?"
-  }
-  ]);
-
-  //clear chats
-  function clearChat() {
-    setChatLog([{
+  const [chatLogs, setChatLogs] = useState([
+    { id: 0, username: 'Chat Room 1', 
+    chatmessages: [{
       role : "assistant",
       content : "How can i help you darling?"
-    }]);
+    }] },
+  ]);
+
+  const [activeChatLogId, setActiveChatLogId] = useState(chatLogs[0].id);
+  const [totalChatLogId, setTotalChatLogId] = useState(1);
+
+
+  const handleTabClick = (id) => {
+    setActiveChatLogId(id);
+    // console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    // setChatLog([])
+    // let temp=chatLogs[activeChatLogId].chatmessages;
+    // setChatLog(temp);
+  };
+  //clear chats
+
+  function clearChat() {
+    if(chatLogs.length>1){
+      const updatedChatLogs = chatLogs.filter(
+        (chatLog) => chatLog.id !== activeChatLogId
+      );
+      setChatLogs(updatedChatLogs);
+      setActiveChatLogId(updatedChatLogs[0].id);
+      return;
+    }
   }
+
+  function clearAllChats() {
+    setActiveChatLogId(0);
+    setChatLogs([
+      { id: 0, username: 'Chat Room 1', 
+      chatmessages: [{
+        role : "assistant",
+        content : "How can i help you darling?"
+      }] },
+    ]);
+    setTotalChatLogId(1);
+  }
+  
+  const handleAddChatLog = () => {
+    const newChatLog = {
+      id: totalChatLogId,
+      username: `Chat Room ${totalChatLogId+1}`,
+      chatmessages: [{
+        role : "assistant",
+        content : "How can i help you darling?"
+      }],
+    };
+    setChatLogs([...chatLogs, newChatLog]);
+    setTotalChatLogId(totalChatLogId+1);
+  };
 
 
 
   async function handleSubmit(e){
     e.preventDefault();
     // console.log('submit')
-    let chatLogNew=[...chatLog,{ role: "user", content: `${input}` }]
+    var lastChatLog=chatLogs[activeChatLogId].chatmessages
+    let chatLogNew=[...lastChatLog,{ role: "user", content: `${input}` }]
     // await setChatLog([...chatLog,{ user: "me", message: `${input}` }])
     await setInput("");
-    setChatLog(chatLogNew);
+    // setChatLog(chatLogNew);
+    chatLogs[activeChatLogId].chatmessages=chatLogNew;
+    setChatLogs([...chatLogs]);
     const messages = chatLogNew.map((message) => message.content).join("\n")
     const response = await fetch('http://localhost:3080/', {
       method: 'POST',
@@ -41,43 +92,75 @@ function Home() {
       })
     });
     const data = await response.json();
-    await setChatLog([...chatLogNew,{ role: "assistant", content:`${data.completion.content}`}])
-    
+    let chatLogNew2=[...chatLogNew,{ role: "assistant", content:`${data.completion.content}`}]
+    // await setChatLog([...chatLogNew,{ role: "assistant", content:`${data.completion.content}`}])
+    chatLogs[activeChatLogId].chatmessages=chatLogNew2;
+    setChatLogs([...chatLogs]);
     
     
   }
+
+  const ChatLog_List = ({content}) => {
+    return(
+      <div key={content.id} className={content.id === activeChatLogId ? 'listChat-button-active':'listChat-button'} onClick={() => handleTabClick(content.id)}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path fill="none" stroke="#ffffff" d="M3 3.503h10c.277 0 .5.223.5.5v6c0 .277-.223.5-.5.5H9v2.5l-4-2.5H3a.499.499 0 0 1-.5-.5v-6c0-.277.223-.5.5-.5z" className="colorStroke000 svgStroke"></path></svg>
+      {/* <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/> </svg> */}
+        <text className='clearChat'>
+          {content.username}
+        </text>
+      </div>
+    );
+  }
   
+
   
   
   return (
     <div className='App' scroll="no">
       <div className='sidemenu'>
-        <h2>
+        <h2 className='CRDGPT'>
           CRDGPT
         </h2>
-        <div className='clearChat-button' onClick={clearChat}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/> </svg>
-            <text className='clearChat'>
-              Clear Chat
-            </text>
+        <Algorithm></Algorithm>
+        <div className='NewChat-button' onClick={handleAddChatLog}>
+          <svg fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="16px" height="16px"><path d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 24 13 L 24 24 L 13 24 L 13 26 L 24 26 L 24 37 L 26 37 L 26 26 L 37 26 L 37 24 L 26 24 L 26 13 L 24 13 z"/></svg>
+              <text className='clearChat'>
+                New chat
+              </text>
+        </div>
+
+        <div className='chatList-outer'>
+            {chatLogs.map((chatLog) => (
+              <ChatLog_List content={chatLog} />
+              ))}
         </div>
         
-        <Algorithm></Algorithm>
-        <section className='footer'>
         
-        <h4>Tugas Besar 3</h4>
-        
-        <p>IF2211 Strategi Algoritma</p> 
+        <div className='footer'>
+          <div className='clearChat-button' onClick={clearChat}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/> </svg>
+              <text className='clearChat'>
+                Clear Chat
+              </text>
+          </div>
+          <div className='clearChat-button' onClick={clearAllChats}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/> </svg>
+              <h2 className='clearChat'>
+                Reset All
+              </h2>
+          </div>
+          
+          <h4 className='TB3'>Tugas Besar 3</h4>
+          
+          <p className='TB3Footer'>IF2211 Strategi Algoritma</p> 
 
-        </section>
+        </div>
       </div>
       <div className='chatbox'>
         <div className='chat-log-outer'>
-          <div className='chat-log'>
-            {chatLog.map((message,index) => (
-              <ChatMessage key={index} message={message} />
-              ))}
-          </div>
+          
+          <ChatLog chatLog={chatLogs.find((chatLog) => chatLog.id === activeChatLogId)} />
+        
         </div>
         <div className='chat-input-holder'>
             <form onSubmit={handleSubmit}>
@@ -98,51 +181,39 @@ function Home() {
   );
 }
 
-// const Algorithm = ()=> {
-  
-//   return (
-//     <div class='dropdown'>
-//       <div class='select'>
-//         <span class='selected'>Facebook</span>
-//         <div class='caret'>
 
-//         </div>
-    
-//       </div>      
-//       <ul class='menu'>
-//         <li class="active">Facebook</li>
-//         <li>Instagram</li>
-//       </ul>
-//     </div>
-//   )
-// };
-const Algorithm = ()=> {
-  
+function ChatLog({ chatLog }) {
   return (
-    <div class='select-container'>
-    <div class="select">
-      <select name="format" id="format">
-          <option selected disabled>Choose Algorithm</option>
-          <option value="pdf">KMP</option>
-          <option value="txt">BM</option>
-          <option value="epub">GPT</option>
-      </select>
+    <div className="chat-log">
+      <ChatLogMessages key={chatLog.id} messages={chatLog.chatmessages} />
     </div>
+  );
+}
+
+function ChatLogMessages({ messages }) {
+  return (
+    <div className="chat-log-messages">
+      {messages.map((message) => (
+        <ChatMessage message={message}/>
+      ))}
     </div>
-  )
-};
-const ChatMessage = ({ message }) => {
+  );
+}
+
+const ChatMessage = ({message}) => {
+  let stringMessage = message.content;
   return (
     <div className= {`chat-message ${message.role === "assistant" && "chatgpt"}`}>
     <div className='chat-message-center'>
       <div className= {`avatar ${message.role === "assistant" && "chatgpt"}`}>
           {message.role === "assistant" &&  <svg
             xmlns="http://www.w3.org/2000/svg"
-            width={41}
-            height={41}
+            width={40}
+            height={40}
             fill="none"
             strokeWidth={1.5}
             className="h-6 w-6"
+            viewBox="0 0 40 40"
             >
             <path
               fill="currentColor"
@@ -151,8 +222,7 @@ const ChatMessage = ({ message }) => {
           </svg> }
       </div>
       <div className='message'>
-        {message.content}
-
+        <Typewriter options={{autoStart: true,loop:false,delay:10,strings:stringMessage,cursor:''}}/>
       </div>
     </div>
   </div>
@@ -160,34 +230,20 @@ const ChatMessage = ({ message }) => {
 }
 
 
-// const dropdowns = document.querySelector('.dropdown');
-
-// dropdowns.forEach(dropdown => {
-//   const select = dropdown.querySelector('.select');
-//   const caret = dropdown.querySelector('.select');
-//   const menu = dropdown.querySelector('.select');
-//   const options = dropdown.querySelector('.select');
-//   const selected = dropdown.querySelector('.select');
-
-//   select.addEventListener('click', () => {
-//     select.classList.toggle('selecct-clicker');
-//     caret.classList.toggle('caret-rotate');
-//     menu.classList.toggle('menu-open');
-//   });
-
-//   options.forEach(option => {
-//     option.addEventListener('click', () => {
-//       selected.innerText = option.innerText;
-//       select.classList.remove('selecct-clicked');
-//       caret.classList.remove('caret-rotate');
-//       menu.classList.remove('menu-open');
-//       options.forEach(option => {
-//         option.classList.remove('.active');
-//       });
-//       option.classList.add('active');
-//     });
-//   });
-// });
-
+const Algorithm = ()=> {
+    
+  return (
+    <div className='select-container'>
+    <div className="select">
+      <select name="format" id="format">
+          <option select="enabled">Choose Algorithm</option>
+          <option value="KMP">KMP</option>
+          <option value="BM">BM</option>
+          <option value="GPT">GPT</option>
+      </select>
+    </div>
+    </div>
+  )
+};
 export default Home;
 

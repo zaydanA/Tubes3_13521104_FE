@@ -9,111 +9,118 @@
   right: 0;
   left: 0;
   min-width: 500px;
-  min-height: 350px;
-  /* max-height: 1500px; */
-  /* resize: vertical; */
-  /* overflow-y:hidden; */
-  /* min-height: 200px; */
-  /* height: 100%; */
+  min-height: 385px;
+  resize: vertical;
   
+}
+
+.CRDGPT{
+  font-size: 2em;
+  margin: 18px;
+  font-weight: 700;
 }
 
 .sidemenu{
   position: relative;
   width: 260px;
   height: 100%;
-  /* overflow:visible; */
-  /* border: 1px solid white; */
   background-color: #202123;
   padding: 8px;
   align-items: center;
   position: relative;
   display: inline-block;
-  /* resize: vertical; */
 }
 
 .footer{
   position: absolute;
-  /* margin-top: 1050px; */
-  bottom: 0;
+  bottom: 0px;
   left: 0;
   right: 0;
-  height: 100px;
-  /* padding: 0px; */
-  /* padding-top: 40px; */
-
-
+  height: fit-content;
+  background-color: #202123;  
+  height: 200px;
+  border-top: 1px solid white;
 }
 
-
+.TB3{
+  font-size: 1.2em;
+  margin: 16px;
+  font-weight: 600;
+}
 
 .clearChat{
-  position: relative;
   padding-left: 10px;
 }
 
 .clearChat-button{
-  /* margin-top: 10px; */
-  /* bottom: 100px; */
-  position: absolute;
-  bottom: 100px;
-  width: 245px;
-  height: 50px;
-  /* position: absolute; */
+  margin: 10px;
+  display: flex;
   padding: 12px;
   border: 1px solid #4c4d4f;
   border-radius: 4px;
-  /* background-color: white;
-  color: black; */
+  position: relative;
   text-align: left;
   transition: ease 0.25s all;
-  /* font-size: 0.8em; */
+  cursor: pointer;
+  
 
 }
 
 .clearChat-button:hover{
-  /* margin-top: 10px;
-  padding: 12px;
-  border: 1px solid white;
-  border-radius: 4px;
-  background-color: white;
-  color: black;
-  text-align: left; */
   background-color: rgba(255, 255, 255, 0.1);
 
 }
-.clearChat-button span{
+.clearChat{
+  padding-left: 10px;
+}
+
+.NewChat-button{
+  margin-bottom: 5px;
+  margin-right: 2px;
+  margin-left: 2px;
+  padding: 12px;
+  display: flex;
+  border: 1px solid #4c4d4f;
+  border-radius: 4px;
+  text-align: left;
+  transition: ease 0.25s all;
+  cursor: pointer;
+
+}
+
+.NewChat-button:hover{
+  background-color: rgba(255, 255, 255, 0.1);
+
+}
+.NewChat-button span{
   padding-left: 4px;
   padding-right: 13px;
-
-  /* font-size: 1.5em; */
 }
 
 .chatbox{
   width: 100%;
   flex: 1;
   height: 100%;
-  /* overflow-y:scroll; */
+  overflow: hidden;
   resize: none;
-    /* border: 1px solid white; */
   background-color: #343541;
   position: relative;
   align-items:center;
-  /* display: inline-block; */
   
 
 }
-
+::-webkit-scrollbar {
+  width: 0;  
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
 .chat-log-outer{
   width: 100%;
-  /* flex: 1; */
   height: 100%;
   resize: vertical;
+  overflow-x: hidden;
   overflow-y:scroll;
-  resize: none;
-    /* border: 1px solid white; */
+  scroll-behavior: smooth;
   background-color: #343541;
-  /* position: relative; */
   align-items:center;
   padding-bottom: 80px;
 }
@@ -130,7 +137,7 @@
 }
 
 .chat-message-center{
-  z-index: 10;
+  /* z-index: 10; */
   padding: 22px;
   padding-left: 24px;
   padding-right: 24px;
@@ -140,8 +147,8 @@
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  /* overflow: hidden; */
 }
-
 .avatar{
   background: white;
   border-radius: 50%;
@@ -149,17 +156,24 @@
   height: 40px;
   /* z-index: 11; */
   position: relative;
+  flex-shrink: 0;
   /* display: flex; */
   padding-bottom: 4px;
   /* color: black; */
+  align-items: center;
 }
 
 .avatar.chatgpt{
   background: #0da37f;
   border-radius: 50%;
+  padding-left:8px;
+  padding-top: 8px;
   width: 40px;
   height: 40px;
   position: relative;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
   /* display:block; */
   /* resize: none; */
   /* color: black; */
@@ -198,7 +212,7 @@
   font-size: 1em;
   resize: none;
   border: none;
-  max-width: 900px;
+  max-width: 800px;
   border: none;
   /* overflow: hidden; */
   outline: none;
