@@ -2,6 +2,7 @@
 import { Inter } from 'next/font/google'
 // import ReactDOM from 'react-dom';
 import {useState} from 'react'
+import { useRouter } from 'next/router';
 import Typewriter, { TypewriterClass } from 'typewriter-effect';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -12,6 +13,9 @@ function Home() {
   //   role : "assistant",
   //   content : "How can i help you darling?"
   // }]);
+
+//   const router = useRouter();
+//   const [chatLogs, setChatLogs] = useState(fetchChatLogs(router.query.id));
 
   const [chatLogs, setChatLogs] = useState([
     { id: 0, username: 'Chat Room 1', 
@@ -111,8 +115,20 @@ function Home() {
     );
   }
 
-  const handleOptionClick = (event) => {
+  const handleOptionClick = async (event) => {
     setAlgorithmChoice(event.target.value);
+      try {
+        await fetch('http://localhost:3080/algotype', {
+          method: 'POST',
+          headers : {'Content-Type': 'application/json'
+        },
+          body: JSON.stringify({
+            type: event.target.value
+          })
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const Algorithm = ()=> {
@@ -121,9 +137,9 @@ function Home() {
       <div className='select-container'>
       <div className="select">
         <select name="format" id="format" value={algorithmChoice} onChange={handleOptionClick}>
-            <option value="KMP" onMouseDown={handleOptionClick} >KMP</option>
-            <option value="BM" onMouseDown={handleOptionClick}>BM</option>
-            <option value="GPT" onMouseDown={handleOptionClick}>GPT</option>
+            <option value="KMP" >KMP</option>
+            <option value="BM">BM</option>
+            {/* <option value="GPT">GPT</option> */}
         </select>
       </div>
       </div>
@@ -197,6 +213,25 @@ function Home() {
   );
 }
 
+// // const [chatLogs, setChatLogs] = useState([
+// //   { id: 0, username: 'Chat Room 1', 
+// //   chatmessages: [{
+// //     role : "assistant",
+// //     content : "How can i help you darling?"
+// //   }] },
+// // ]);
+
+// async function fetchChatLogs(currentChatId) {
+//   if (currentChatId == undefined) currentChatId = "";
+
+//   const response = await fetch('http://localhost:3080/allsessions', {
+//     method: 'GET',
+//     headers : {'Content-Type': 'application/json'},
+//   });
+
+//   const data = await response.json();
+//   console.log(data);
+// }
 
 function ChatLog({ chatLog }) {
   return (
