@@ -83,22 +83,20 @@ function Home() {
     // setChatLog(chatLogNew);
     chatLogs[activeChatLogId].chatmessages=chatLogNew;
     setChatLogs([...chatLogs]);
-    const messages = chatLogNew.map((message) => message.content).join("\n")
-    const response = await fetch('http://localhost:3080/', {
+    const message = {question: input}
+    const response = await fetch('http://localhost:3080/question', {
       method: 'POST',
       headers : {'Content-Type': 'application/json'
     },
       body: JSON.stringify({
-        messages
+        message
       })
     });
     const data = await response.json();
-    let chatLogNew2=[...chatLogNew,{ role: "assistant", content:`${data.completion.content}`}]
+    let chatLogNew2=[...chatLogNew,{ role: "assistant", content:`${data.answer}`}]
     // await setChatLog([...chatLogNew,{ role: "assistant", content:`${data.completion.content}`}])
     chatLogs[activeChatLogId].chatmessages=chatLogNew2;
     setChatLogs([...chatLogs]);
-    
-    
   }
   
   const ChatLog_List = ({content}) => {
