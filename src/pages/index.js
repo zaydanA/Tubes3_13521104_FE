@@ -8,7 +8,7 @@ import Typewriter, { TypewriterClass } from 'typewriter-effect';
 const inter = Inter({ subsets: ['latin'] })
 
 function Home() {
-  const [input,setInput]= useState("")
+  const [input,setInput]= useState("") //input data to BE
   // const [chatLog,setChatLog] = useState([{
   //   role : "assistant",
   //   content : "How can i help you darling?"
@@ -17,6 +17,7 @@ function Home() {
 //   const router = useRouter();
 //   const [chatLogs, setChatLogs] = useState(fetchChatLogs(router.query.id));
 
+//chatLogs store chatlogs each chat history
   const [chatLogs, setChatLogs] = useState([
     { id: 0, username: 'Chat Room 1', 
     chatmessages: [{
@@ -25,20 +26,19 @@ function Home() {
     }] },
   ]);
 
+  //chtlogs idActive
   const [activeChatLogId, setActiveChatLogId] = useState(chatLogs[0].id);
+  //store last id has crated in chatlogs
   const [totalChatLogId, setTotalChatLogId] = useState(1);
+  //algorithmChoice
   const [algorithmChoice, setAlgorithmChoice] = useState('KMP');
 
-
+  //handle click chat history
   const handleTabClick = (id) => {
     setActiveChatLogId(id);
-    // console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-    // setChatLog([])
-    // let temp=chatLogs[activeChatLogId].chatmessages;
-    // setChatLog(temp);
   };
-  //clear chats
 
+  //clear chats
   function clearChat() {
     if(chatLogs.length>1){
       const updatedChatLogs = chatLogs.filter(
@@ -62,6 +62,7 @@ function Home() {
     setTotalChatLogId(1);
   }
   
+  //handle click add  chat history
   const handleAddChatLog = () => {
     const newChatLog = {
       id: totalChatLogId,
@@ -103,18 +104,7 @@ function Home() {
     setChatLogs([...chatLogs]);
   }
   
-  const ChatLog_List = ({content}) => {
-    return(
-      <div key={content.id} className={content.id === activeChatLogId ? 'listChat-button-active':'listChat-button'} onClick={() => handleTabClick(content.id)}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path fill="none" stroke="#ffffff" d="M3 3.503h10c.277 0 .5.223.5.5v6c0 .277-.223.5-.5.5H9v2.5l-4-2.5H3a.499.499 0 0 1-.5-.5v-6c0-.277.223-.5.5-.5z" className="colorStroke000 svgStroke"></path></svg>
-      {/* <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/> </svg> */}
-        <h2 className='clearChat'>
-          {content.username}
-        </h2>
-      </div>
-    );
-  }
-
+  //handle algorithm choice
   const handleOptionClick = async (event) => {
     setAlgorithmChoice(event.target.value);
       try {
@@ -131,6 +121,19 @@ function Home() {
     }
   }
 
+  const ChatLog_List = ({content}) => {
+    return(
+      <div key={content.id} className={content.id === activeChatLogId ? 'listChat-button-active':'listChat-button'} onClick={() => handleTabClick(content.id)}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path fill="none" stroke="#ffffff" d="M3 3.503h10c.277 0 .5.223.5.5v6c0 .277-.223.5-.5.5H9v2.5l-4-2.5H3a.499.499 0 0 1-.5-.5v-6c0-.277.223-.5.5-.5z" className="colorStroke000 svgStroke"></path></svg>
+      {/* <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/> </svg> */}
+        <h2 className='clearChat'>
+          {content.username}
+        </h2>
+      </div>
+    );
+  }
+
+
   const Algorithm = ()=> {
     
     return (
@@ -139,7 +142,6 @@ function Home() {
         <select name="format" id="format" value={algorithmChoice} onChange={handleOptionClick}>
             <option value="KMP" >KMP</option>
             <option value="BM">BM</option>
-            {/* <option value="GPT">GPT</option> */}
         </select>
       </div>
       </div>
@@ -213,25 +215,6 @@ function Home() {
   );
 }
 
-// // const [chatLogs, setChatLogs] = useState([
-// //   { id: 0, username: 'Chat Room 1', 
-// //   chatmessages: [{
-// //     role : "assistant",
-// //     content : "How can i help you darling?"
-// //   }] },
-// // ]);
-
-// async function fetchChatLogs(currentChatId) {
-//   if (currentChatId == undefined) currentChatId = "";
-
-//   const response = await fetch('http://localhost:3080/allsessions', {
-//     method: 'GET',
-//     headers : {'Content-Type': 'application/json'},
-//   });
-
-//   const data = await response.json();
-//   console.log(data);
-// }
 
 function ChatLog({ chatLog }) {
   return (
