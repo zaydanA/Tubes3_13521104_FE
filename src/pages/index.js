@@ -277,19 +277,23 @@ function Home() {
                 </div>
             </div>
             <div className='chatbox'>
-                <div className='chat-log-outer'>
+                <div className='chat-log-outer' scroll='no'>
                     <ChatLog allChats={allChats} />
                 </div>
-                <div className='chat-input-holder'>
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            placeholder='Type something'
-                            rows='1'
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            className='chat-input-textarea'
-                        ></input>
-                    </form>
+                <div className='chat-input-holder-outer1'>
+                  <div className='chat-input-holder'>
+                      <form onSubmit={handleSubmit}>
+                          <input
+                              placeholder='Type something'
+                              rows='1'
+                              value={input}
+                              onChange={(e) => setInput(e.target.value)}
+                              className='chat-input-textarea'
+                              ></input>
+                      </form>
+                  </div>
+                </div>
+                <div className='chat-input-holder-outer'>
                 </div>
             </div>
         </div>
