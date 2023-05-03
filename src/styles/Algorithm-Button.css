@@ -12,9 +12,9 @@ select {
     padding: 0 .5em;
     color:rgb(0, 0, 0);
     cursor:pointer;
-    font-size: 1em;
+    font-size: em;
     font-family: 'Open Sans', sans-serif;
-    border-radius: 4px;
+    border-radius: 5px;
  }
  select::-ms-expand {
     display: none;
@@ -30,23 +30,25 @@ select {
     display: flex;
     /* width: 244px; */
     height: 2.5em;
-    line-height: 3;
+    line-height: 2.5;
     background: #5c6664;
     overflow: hidden;
     border-radius: 5px;
  }
  .select::after {
     content: '\25BC';
-    position: ab;
+    position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     padding: 0 1em;
-    background: #2b2e2e;
+    /* background: #2b2e2e; */
     cursor:pointer;
     pointer-events:none;
     transition:.25s all ease;
+    color: #888;
  }
+
  .select:hover::after {
-    color: #23b499;
+    color: #555;
  }

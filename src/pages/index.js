@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Typewriter, { TypewriterClass } from 'typewriter-effect';
 
+
 const inter = Inter({ subsets: ['latin'] });
 
 function Home() {
@@ -348,6 +349,7 @@ const ChatMessage = ({ message }) => {
                             />
                         </svg>
                     )}
+
                 </div>
                 <div className='message'>
                     <Typewriter

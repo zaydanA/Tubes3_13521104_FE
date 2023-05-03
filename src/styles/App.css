@@ -150,17 +150,24 @@
   /* overflow: hidden; */
 }
 .avatar{
-  background: white;
+  /* background: whitesmoke; */
+  background-image: url(beluga.jpg);
+  /* background-repeat: no-repeat; */
+  background-size:contain;
   border-radius: 50%;
+  padding-left:8px;
+  padding-top: 8px;
   width: 40px;
   height: 40px;
-  /* z-index: 11; */
   position: relative;
   flex-shrink: 0;
-  /* display: flex; */
-  padding-bottom: 4px;
-  /* color: black; */
   align-items: center;
+  justify-content: center;
+  
+}
+
+.avatar img{
+  object-fit:contain
 }
 
 .avatar.chatgpt{
@@ -174,9 +181,7 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  /* display:block; */
-  /* resize: none; */
-  /* color: black; */
+
 }
 
 .message{
