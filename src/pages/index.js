@@ -56,6 +56,7 @@ function Home() {
             const data = await response.json();
             const chats = [];
             data.chatLog.forEach((chat) => {
+              console.log(chat.answer);
                 chats.push(
                     {
                         role: 'user',
@@ -67,6 +68,7 @@ function Home() {
                     }
                 );
             });
+            
             console.log(chats);
             setAllChats(chats);
         }
@@ -141,7 +143,8 @@ function Home() {
 
         setInput('');
         setCurrentSessionId(session_id);
-    }
+        refreshData();
+    };
 
     //handle algorithm choice
     const handleOptionClick = async (event) => {
