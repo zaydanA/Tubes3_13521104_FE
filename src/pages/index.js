@@ -38,7 +38,7 @@ function Home() {
     const [algorithmChoice, setAlgorithmChoice] = useState('KMP');
 
     const refreshData = async () => {
-        const response = await fetch('http://localhost:3080/all-sessions', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/all-sessions`, {
             method: 'GET',
         });
         const data = await response.json();
@@ -48,7 +48,7 @@ function Home() {
             setAllChats([]);
         } else {
             const response = await fetch(
-                'http://localhost:3080/session?' +
+                `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/session?` +
                     new URLSearchParams({ id: currentSessionId }),
                 {
                     method: 'GET',
@@ -89,7 +89,7 @@ function Home() {
     async function clearChat() {
         if (currentSessionId !== '') {
             await fetch(
-                'http://localhost:3080/clear-session?' +
+                `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/clear-session?` +
                     new URLSearchParams({ id: currentSessionId }),
                 {
                     method: 'GET',
@@ -100,7 +100,7 @@ function Home() {
     }
 
     async function clearAllChats() {
-        await fetch('http://localhost:3080/clear-all-sessions', {
+        await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/clear-all-sessions`, {
             method: 'GET',
         });
         if (currentSessionId === '') {
@@ -122,7 +122,7 @@ function Home() {
         let session_id;
 
         if (currentSessionId === '') {
-            const sess_res = await fetch('http://localhost:3080/new-session', {
+            const sess_res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/new-session`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -134,7 +134,7 @@ function Home() {
         }
 
         const message = { question: input };
-        await fetch('http://localhost:3080/chat', {
+        await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/chat`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -152,7 +152,7 @@ function Home() {
     const handleOptionClick = async (event) => {
         setAlgorithmChoice(event.target.value);
         try {
-            await fetch('http://localhost:3080/algotype', {
+            await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/algotype`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
