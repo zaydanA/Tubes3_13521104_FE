@@ -6,15 +6,16 @@ select {
     outline:0;
     box-shadow:none;
     border:0!important;
-    background: #ffffff;
+    background: #343541;
     background-image: none;
     flex: 1;
-    padding: 0 .5em;
-    color:rgb(0, 0, 0);
+    padding: 0 1.2em;
+    color:#ffffff;
     cursor:pointer;
-    font-size: em;
+    font-size: 1em;
     font-family: 'Open Sans', sans-serif;
-    border-radius: 5px;
+    border-radius: 10px;
+    font-weight: 600;
  }
  select::-ms-expand {
     display: none;
@@ -31,24 +32,27 @@ select {
     /* width: 244px; */
     height: 2.5em;
     line-height: 2.5;
-    background: #5c6664;
+    /* background: #5c6664; */
+    
     overflow: hidden;
     border-radius: 5px;
  }
  .select::after {
-    content: '\25BC';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    padding: 0 1em;
-    /* background: #2b2e2e; */
-    cursor:pointer;
-    pointer-events:none;
-    transition:.25s all ease;
+   content: '\2304';
+   position: absolute;
+   top: -6px;
+   right: 0;
+   transform: scale(1.5);
+   /* bottom: 0; */
+   padding: 0 1.1em;
+   /* background: #2b2e2e; */
+   cursor:pointer;
+   pointer-events:none;
+   transition:.25s all ease;
     color: #888;
  }
 
  .select:hover::after {
     color: #555;
  }
+
