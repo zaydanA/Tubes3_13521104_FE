@@ -56,13 +56,14 @@ function Home() {
             );
             const data = await response.json();
             const chats = [];
+
             data.chatLog.forEach((chat) => {
-              console.log(chat.answer);
+                chats.push(                    {
+                    role: 'user',
+                    content: chat.question,
+                })
+                setTimeout(() => {})
                 chats.push(
-                    {
-                        role: 'user',
-                        content: chat.question,
-                    },
                     {
                         role: 'assistant',
                         content: chat.answer,
@@ -144,7 +145,7 @@ function Home() {
 
         setInput('');
         setCurrentSessionId(session_id);
-        refreshData();
+        await refreshData();
     };
 
     //handle algorithm choice
@@ -352,15 +353,18 @@ const ChatMessage = ({ message }) => {
 
                 </div>
                 <div className='message'>
-                    <Typewriter
+                    {message.role === 'assistant' && <Typewriter
                         options={{
                             autoStart: true,
                             loop: false,
-                            delay: 10,
+                            delay: 50,
                             strings: stringMessage,
                             cursor: '',
                         }}
-                    />
+                    />}
+                    {message.role === 'user' && <text>
+                        {stringMessage}
+                        </text>}
                 </div>
             </div>
         </div>
