@@ -300,12 +300,7 @@ function Home() {
             </div>
             <div className='chatbox'>
                 <div className='chat-log-outer'>
-                    {currentSessionId ==='' && <ChatLog allChats={ [                   {
-                        role: 'assistant',
-                        content: "Hi darling, how can I help You today?",
-                    }]} />}
-                    {currentSessionId !=='' && <ChatLog allChats={allChats} />}
-                    
+                    <ChatLog allChats={allChats} />
                 </div>
                 <div className='chat-input-holder-outer1'>
                   <div className='chat-input-holder'>
@@ -341,6 +336,10 @@ function ChatLog({ allChats }) {
 function ChatLogMessages({ messages }) {
     return (
         <div className='chat-log-messages'>
+            <ChatMessage key={0} message={{
+                        role: 'assistant',
+                        content: "Hi darling, how can I help You today?",
+            }} />
             {messages.map((message, idx) => (
                 <ChatMessage key={idx} message={message} />
             ))}
