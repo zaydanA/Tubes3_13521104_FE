@@ -32,3 +32,6 @@ npm run serverstart
 1. Enrique Alifio Ditya - 13521142
 2. Rinaldy Adin - 13521134
 3. Muhammad Zaydan Athallah - 13521104
+
+##Link
+https://crdgpt-rinaldy-adin.vercel.app/
