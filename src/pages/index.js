@@ -8,6 +8,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 
+
 const inter = Inter({ subsets: ['latin'] });
 
 function Home() {
@@ -299,7 +300,12 @@ function Home() {
             </div>
             <div className='chatbox'>
                 <div className='chat-log-outer'>
-                    <ChatLog allChats={allChats} />
+                    {currentSessionId ==='' && <ChatLog allChats={ [                   {
+                        role: 'assistant',
+                        content: "Hi darling, how can I help You today?",
+                    }]} />}
+                    {currentSessionId !=='' && <ChatLog allChats={allChats} />}
+                    
                 </div>
                 <div className='chat-input-holder-outer1'>
                   <div className='chat-input-holder'>
