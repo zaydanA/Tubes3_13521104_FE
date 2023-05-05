@@ -40,9 +40,10 @@ select {
  .select::after {
    content: "\2304";
    position: absolute;
-   top: -6px;
+   top: -4px;
    right: 0;
    transform: scale(1.5);
+   transform: scaleX(1.5);
    /* bottom: 0; */
    padding: 0 1.1em;
    /* background: #2b2e2e; */
