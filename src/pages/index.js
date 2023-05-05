@@ -333,15 +333,8 @@ function ChatLog({ allChats }) {
 }
 
 function ChatLogMessages({ messages }) {
-    const containerRef = useRef(null);
-
-    useEffect(() => {
-    if (containerRef.current) {
-        containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-    }, [messages]);
     return (
-        <div className='chat-log-messages' ref={containerRef}>
+        <div className='chat-log-messages'>
             {messages.map((message, idx) => (
                 <ChatMessage key={idx} message={message} />
             ))}
