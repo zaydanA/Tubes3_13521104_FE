@@ -33,5 +33,5 @@ npm run serverstart
 2. Rinaldy Adin - 13521134
 3. Muhammad Zaydan Athallah - 13521104
 
-##Link
+## Link
 https://crdgpt-rinaldy-adin.vercel.app/
