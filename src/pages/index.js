@@ -1,10 +1,12 @@
 // import Image from 'next/image'
 import { Inter } from 'next/font/google';
 // import ReactDOM from 'react-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState ,useRef} from 'react';
 import { useRouter } from 'next/router';
 import Typewriter, { TypewriterClass } from 'typewriter-effect';
-
+import TextareaAutosize from 'react-textarea-autosize';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -211,6 +213,23 @@ function Home() {
         );
     };
 
+    function handleKeyDown(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          handleSubmit(event);
+          console.log(input);
+        }
+    }
+    
+    function handleKeyPress(event) {
+        if (event.key === 'Enter' && event.shiftKey) {
+          event.preventDefault();
+          setInput(input + '\n');
+        }
+    }
+
+
+
     return (
         <div className='App' scroll='no'>
             <div className='sidemenu'>
@@ -279,19 +298,24 @@ function Home() {
                 </div>
             </div>
             <div className='chatbox'>
-                <div className='chat-log-outer' scroll='no'>
+                <div className='chat-log-outer'>
                     <ChatLog allChats={allChats} />
                 </div>
                 <div className='chat-input-holder-outer1'>
                   <div className='chat-input-holder'>
-                      <form onSubmit={handleSubmit}>
-                          <input
+                      <form onSubmit={handleSubmit} className='form'>
+                            <TextareaAutosize
                               placeholder='Type something'
                               rows='1'
                               value={input}
-                              onChange={(e) => setInput(e.target.value)}
                               className='chat-input-textarea'
-                              ></input>
+                              onChange={(e) => setInput(e.target.value)}
+                              onKeyDown={handleKeyDown}
+                              onKeyPress={handleKeyPress}
+                              />
+                            <button type='submit' className='submit-button'>
+                                <FontAwesomeIcon icon={faPaperPlane} />
+                            </button>
                       </form>
                   </div>
                 </div>
@@ -304,15 +328,20 @@ function Home() {
 
 function ChatLog({ allChats }) {
     return (
-        <div className='chat-log'>
-            <ChatLogMessages messages={allChats} />
-        </div>
+        <ChatLogMessages messages={allChats} />
     );
 }
 
 function ChatLogMessages({ messages }) {
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+    if (containerRef.current) {
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+    }, [messages]);
     return (
-        <div className='chat-log-messages'>
+        <div className='chat-log-messages' ref={containerRef}>
             {messages.map((message, idx) => (
                 <ChatMessage key={idx} message={message} />
             ))}
