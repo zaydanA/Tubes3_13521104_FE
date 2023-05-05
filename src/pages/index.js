@@ -357,7 +357,7 @@ const ChatMessage = ({ message }) => {
                         options={{
                             autoStart: true,
                             loop: false,
-                            delay: 50,
+                            delay: 10,
                             strings: stringMessage,
                             cursor: '',
                         }}
