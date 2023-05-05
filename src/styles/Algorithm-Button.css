@@ -38,6 +38,7 @@ select {
     border-radius: 5px;
  }
  .select::after {
+   content: "\2304";
    position: absolute;
    top: -6px;
    right: 0;
